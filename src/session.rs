@@ -143,8 +143,8 @@ mod tests {
     fn login() {
         let mut sess = Session::init(
             "http://applecreekacres.farmos.net".to_string(),
-            "lucasbrendel".to_string(),
-            "uvtdLx3S".to_string(),
+            "".to_string(),
+            "".to_string(),
         );
         sess.authenticate();
         // assert_eq!((), sess.authenticate())
