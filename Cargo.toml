@@ -6,3 +6,5 @@ version = "0.1.0"
 
 [dependencies]
 reqwest = "0.9.19"
+log = "0.4.8"
+simplelog = "0.7.4"

@@ -7,6 +7,8 @@ use reqwest::RedirectPolicy;
 use reqwest::Response;
 use reqwest::StatusCode;
 
+use crate::logging;
+
 pub enum Method {
     Post,
     Put,
@@ -26,6 +28,7 @@ impl Session {
     pub fn init(host: String, username: String, password: String) -> Self {
         let end: &[char] = &['/'];
         let trimmed_host = host.trim_end_matches(end).to_string();
+        logging::logging_init();
         Session {
             hostname: trimmed_host,
             username: username,
@@ -52,6 +55,7 @@ impl Session {
         // let resp = self.request("user/login", Method::Post, HashMap::new(), data.clone(), true);
         // let resp2 = self.request("restws/session/token", Method::Get, HashMap::new(), data.clone(), true);
         let url = format!("{}/{}", self.hostname, "user/login");
+        info!("Accessing URL {}", url);
         let mut resp = self.client.post(url.as_str()).form(&data).send()?;
 
         while resp.status() != StatusCode::from_u16(200)? {
@@ -77,7 +81,7 @@ impl Session {
             };
         }
         self.token = resp2.text()?;
-        println!("{}", self.token);
+        debug!("{}", self.token);
         Ok(())
     }
 
@@ -143,10 +147,10 @@ mod tests {
     fn login() {
         let mut sess = Session::init(
             "http://applecreekacres.farmos.net".to_string(),
-            "".to_string(),
-            "".to_string(),
+            "lucasbrendel".to_string(),
+            "uvtdLx3S".to_string(),
         );
-        sess.authenticate();
+        let res = sess.authenticate();
         // assert_eq!((), sess.authenticate())
     }
 }
