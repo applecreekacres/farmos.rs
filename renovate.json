@@ -1,0 +1,5 @@
+{
+  "extends": [
+    "local>applecreekacres/renovate-config"
+  ]
+}
